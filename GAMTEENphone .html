@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게임파티룸 겜틴 | 공식 홈페이지</title>
+    <style>
+        :root {
+            --point-yellow: #ffde00;
+            --bg-black: #111111;
+            --danger-pattern: repeating-linear-gradient(45deg, #ffde00, #ffde00 20px, #000 20px, #000 40px);
+        }
+        
+        * { box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background-color: var(--bg-black); 
+            color: white; 
+            margin: 0; 
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .danger-bar { height: 12px; background: var(--danger-pattern); width: 100%; }
+
+        header { 
+            padding: 15px 20px; 
+            display: flex; 
+            flex-direction: column;
+            gap: 8px;
+            align-items: center; 
+            background: #000; 
+            border-bottom: 2px solid var(--point-yellow); 
+        }
+        
+        .logo { 
+            font-size: 24px; 
+            font-weight: 900; 
+            color: var(--point-yellow); 
+            font-style: italic; 
+        }
+        
+        .header-subtitle {
+            color: var(--point-yellow); 
+            font-weight: bold; 
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* 메인 배너 */
+        .hero-section { 
+            width: 100%; 
+            height: 400px; 
+            position: relative; 
+            background: #000; 
+            border-bottom: 4px solid var(--point-yellow); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-text { 
+            text-align: center; 
+            width: 90%; 
+            z-index: 10; 
+            padding: 20px;
+        }
+        
+        .hero-text h1 { 
+            font-size: 2.2rem; 
+            margin: 0 0 10px 0; 
+            letter-spacing: -1px; 
+        }
+        
+        .hero-text span { color: var(--point-yellow); }
+        
+        .hero-text .main-desc { 
+            font-size: 1.1rem; 
+            margin: 15px 0 30px 0; 
+            color: #fff; 
+            font-weight: 600; 
+        }
+
+        /* 버튼 그룹 */
+        .btn-group { 
+            display: flex; 
+            flex-direction: column;
+            gap: 10px; 
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto;
+        }
+        
+        .btn { 
+            padding: 16px 20px; 
+            border-radius: 0; 
+            font-weight: bold; 
+            text-decoration: none; 
+            font-size: 0.95rem; 
+            border: 2px solid var(--point-yellow); 
+            transition: 0.3s; 
+            cursor: pointer; 
+            text-align: center;
+            display: block;
+        }
+        
+        .btn-direct { background: var(--point-yellow); color: #000; }
+        .btn-naver { background: #03c75a; color: #fff; border-color: #03c75a; }
+        .btn-price { background: transparent; color: var(--point-yellow); }
+        .btn-contact { background: #fff; color: #000; border-color: #fff; }
+
+        /* 후기 & 실내공간 섹션 */
+        .review-interior-section { 
+            padding: 40px 20px; 
+            background: #000; 
+        }
+        
+        .review-box, .interior-box { 
+            margin-bottom: 50px;
+        }
+        
+        .review-box h2, .interior-box h2 { 
+            color: var(--point-yellow); 
+            margin-bottom: 20px; 
+            font-size: 1.4rem; 
+            text-align: center;
+        }
+        
+        .review-container, .interior-container { 
+            width: 100%; 
+            max-width: 500px;
+            margin: 0 auto; 
+            overflow: hidden; 
+            position: relative; 
+            border: 2px solid #333; 
+            border-radius: 10px; 
+        }
+        
+        .review-slider, .interior-slider { 
+            display: flex; 
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .review-slider img, .interior-slider img { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            flex-shrink: 0; 
+        }
+
+        /* 화살표 버튼 스타일 */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--point-yellow);
+            border: none;
+            width: 45px;
+            height: 45px;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .slider-arrow:active {
+            background: rgba(255, 222, 0, 0.9);
+            color: #000;
+        }
+
+        .slider-arrow.prev { left: 8px; }
+        .slider-arrow.next { right: 8px; }
+
+        /* 자랑거리 그리드 */
+        .content { 
+            padding: 40px 20px; 
+            max-width: 100%; 
+        }
+        
+        .content h2 {
+            text-align: center; 
+            color: var(--point-yellow); 
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+        
+        .grid { 
+            display: flex;
+            flex-direction: column;
+            gap: 15px; 
+        }
+        
+        .card { 
+            background: #1a1a1a; 
+            padding: 25px 20px; 
+            border-left: 5px solid var(--point-yellow); 
+        }
+        
+        .card h3 { 
+            color: var(--point-yellow); 
+            font-size: 1.15rem; 
+            margin: 0 0 10px 0; 
+            letter-spacing: -0.5px; 
+        }
+        
+        .card p { 
+            font-size: 0.9rem; 
+            color: #ccc; 
+            margin: 0; 
+            line-height: 1.6; 
+            word-break: keep-all; 
+        }
+
+        /* 가격표 */
+        #price-section { 
+            margin-top: 50px; 
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        #price-section h2 {
+            color: var(--point-yellow);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+        
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background: #1a1a1a; 
+            min-width: 600px;
+            font-size: 0.85rem;
+        }
+        
+        th, td { 
+            border: 1px solid #333; 
+            padding: 12px 8px; 
+            text-align: center; 
+        }
+        
+        th { 
+            background: #222; 
+            color: var(--point-yellow); 
+            font-size: 0.9rem;
+        }
+        
+        .discount-price { 
+            color: #ff4757; 
+            font-weight: bold; 
+            font-size: 1rem; 
+        }
+        
+        .original-price { 
+            text-decoration: line-through; 
+            color: #777; 
+            font-size: 0.75rem; 
+            display: block; 
+        }
+        
+        .price-note {
+            text-align: right; 
+            font-size: 0.85rem; 
+            color: var(--point-yellow); 
+            margin-top: 10px; 
+            font-weight: bold;
+            padding-right: 5px;
+        }
+
+        /* 모달 */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.95); 
+        }
+        
+        .modal-content { 
+            background: #222; 
+            margin: 30% auto; 
+            padding: 25px; 
+            border: 2px solid var(--point-yellow); 
+            width: 85%; 
+            max-width: 320px;
+            text-align: center; 
+        }
+        
+        .modal-content h3 {
+            color: var(--point-yellow);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .modal-btn { 
+            display: block; 
+            padding: 15px; 
+            margin: 12px 0; 
+            background: var(--point-yellow); 
+            color: #000; 
+            text-decoration: none; 
+            font-weight: bold; 
+            border-radius: 5px;
+        }
+        
+        .modal-close {
+            background: none; 
+            border: none; 
+            color: #777; 
+            cursor: pointer; 
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+
+        /* 푸터 */
+        footer {
+            padding: 40px 20px; 
+            text-align: center; 
+            border-top: 1px solid #333; 
+            font-size: 0.85rem;
+        }
+        
+        footer p:first-child {
+            color: var(--point-yellow); 
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        footer p:last-child {
+            color: #ccc;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="danger-bar"></div>
+
+<header>
+    <div class="logo">GAMETEEN</div>
+    <div class="header-subtitle">당신만의 프라이빗한 아지트 겜틴</div>
+</header>
+
+<section class="hero-section">
+    <div class="hero-text">
+        <h1>게임파티룸 <span>겜틴</span></h1>
+        <p class="main-desc">당신만의 프라이빗한 아지트 GAMETEEN</p>
+        <div class="btn-group">
+            <a href="sms:01043250076" class="btn btn-direct">홈페이지 예약하기</a>
+            <a href="https://m.place.naver.com/place/2032744532/home?entry=pll" class="btn btn-naver" target="_blank">네이버 예약</a>
+            <a href="#price-section" class="btn btn-price">가격표 보기</a>
+            <button onclick="openModal()" class="btn btn-contact">문의하기</button>
+        </div>
+    </div>
+</section>
+
+<section class="review-interior-section">
+    <!-- 후기 섹션 -->
+    <div class="review-box">
+        <h2>겜틴 고객님들의 100% 솔직 후기</h2>
+        <div class="review-container">
+            <button class="slider-arrow prev" onclick="moveReviewSlide(-1)">‹</button>
+            <div class="review-slider" id="reviewSlider">
+                <img src="https://i.postimg.cc/BtNCkb9t/seukeulinsyas-2026-02-03-022823.png" alt="후기1">
+                <img src="https://i.postimg.cc/3W9ZVN5y/seukeulinsyas-2026-02-03-022831.png" alt="후기2">
+                <img src="https://i.postimg.cc/0rZCFjRz/seukeulinsyas-2026-02-03-022838.png" alt="후기3">
+            </div>
+            <button class="slider-arrow next" onclick="moveReviewSlide(1)">›</button>
+        </div>
+    </div>
+
+    <!-- 실내공간 섹션 -->
+    <div class="interior-box">
+        <h2>겜틴 실내공간</h2>
+        <div class="interior-container">
+            <button class="slider-arrow prev" onclick="moveInteriorSlide(-1)">‹</button>
+            <div class="interior-slider" id="interiorSlider">
+                <img src="https://i.postimg.cc/Wt79VSrc/Kakao-Talk-20250902-212425977-03.jpg" alt="실내1">
+                <img src="https://i.postimg.cc/TpYt3mq1/Kakao-Talk-20250902-212425977-13.jpg" alt="실내2">
+                <img src="https://i.postimg.cc/4mNWxtbb/Kakao-Talk-20250902-212428747-01.jpg" alt="실내3">
+                <img src="https://i.postimg.cc/mt2mgMNS/Kakao-Talk-20250902-212428747-06.jpg" alt="실내4">
+                <img src="https://i.postimg.cc/xcxtJCtg/Kakao-Talk-20250902-213425249.jpg" alt="실내5">
+            </div>
+            <button class="slider-arrow next" onclick="moveInteriorSlide(1)">›</button>
+        </div>
+    </div>
+</section>
+
+<div class="danger-bar"></div>
+
+<section class="content">
+    <h2>겜틴 대표 자랑거리</h2>
+    <div class="grid">
+        <div class="card">
+            <h3>🚜 인기 RC 포크레인</h3>
+            <p>2대 전격 투입! 색다른 손맛을 느껴보세요.</p>
+        </div>
+        <div class="card">
+            <h3>🖥 RTX3060 게이밍 PC</h3>
+            <p>총 8대 완비. 끊김 없는 팀플레이 가능!</p>
+        </div>
+        <div class="card">
+            <h3>🎮 최신 콘솔 기기</h3>
+            <p>닌텐도스위치2 / PS5 완비<br>FC26, UFC, 커비 등 인기 타이틀 다수 보유!</p>
+        </div>
+        <div class="card">
+            <h3>🎱 대형 포켓볼 & 홀덤</h3>
+            <p>대형 포켓볼 완비 및 전용 홀덤/포커 테이블 설치.</p>
+        </div>
+        <div class="card">
+            <h3>🎬 OTT 영화관</h3>
+            <p>4K 대형 화면으로 즐기는 쿠팡플레이 & 넷플릭스.</p>
+        </div>
+        <div class="card">
+            <h3>🏎 고퀄리티 레이싱 & 레트로 게임</h3>
+            <p>생생한 레이싱휠 게임<br>500개 이상의 레트로 게임 완비.</p>
+        </div>
+    </div>
+
+    <div id="price-section">
+        <h2>겜틴 가격 및 패키지 안내</h2>
+        <table>
+            <thead>
+                <tr><th>구분</th><th>월-목</th><th>금요일</th><th>토요일</th><th>일요일</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>낮타임<br><small>(11:00~16:00)</small></td>
+                    <td><span class="original-price">100,000</span><span class="discount-price">60,000</span></td>
+                    <td><span class="original-price">100,000</span><span class="discount-price">60,000</span></td>
+                    <td><span class="original-price">200,000</span><span class="discount-price">120,000</span></td>
+                    <td><span class="original-price">200,000</span><span class="discount-price">120,000</span></td>
+                </tr>
+                <tr>
+                    <td>저녁타임<br><small>(18:00~22:00)</small></td>
+                    <td><span class="original-price">100,000</span><span class="discount-price">60,000</span></td>
+                    <td>밤타임 이용</td>
+                    <td>밤타임 이용</td>
+                    <td><span class="original-price">100,000</span><span class="discount-price">60,000</span></td>
+                </tr>
+                <tr>
+                    <td>밤타임<br><small>(18:00~09:00)</small></td>
+                    <td><span class="original-price">200,000</span><span class="discount-price">120,000</span></td>
+                    <td><span class="original-price">280,000</span><span class="discount-price">220,000</span></td>
+                    <td><span class="original-price">280,000</span><span class="discount-price">220,000</span></td>
+                    <td><span class="original-price">200,000</span><span class="discount-price">120,000</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="price-note">* 기본 5인 기준 / 1명 추가당 1만원</p>
+    </div>
+</section>
+
+<div id="contactModal" class="modal">
+    <div class="modal-content">
+        <h3>문의 방식 선택</h3>
+        <a href="tel:01043250076" class="modal-btn">📞 전화 연결하기</a>
+        <a href="sms:01043250076" class="modal-btn">💬 문자 문의하기</a>
+        <button onclick="closeModal()" class="modal-close">닫기</button>
+    </div>
+</div>
+
+<footer>
+    <p>GAMETEEN | 당신만의 프라이빗한 아지트 겜틴</p>
+    <p>충북 청주시 서원구 산남동 588<br>두꺼비빌딩 3층 302호</p>
+</footer>
+
+<div class="danger-bar"></div>
+
+<script>
+    // 후기 슬라이더 설정
+    let reviewIndex = 0;
+    let reviewAutoSlide;
+
+    function moveReviewSlide(direction) {
+        const reviewSlider = document.getElementById('reviewSlider');
+        const reviewTotal = reviewSlider.children.length;
+        
+        reviewIndex += direction;
+        if (reviewIndex < 0) reviewIndex = reviewTotal - 1;
+        if (reviewIndex >= reviewTotal) reviewIndex = 0;
+        
+        reviewSlider.style.transform = 'translateX(-' + (reviewIndex * 100) + '%)';
+        
+        clearInterval(reviewAutoSlide);
+        startReviewAutoSlide();
+    }
+
+    function startReviewAutoSlide() {
+        const reviewSlider = document.getElementById('reviewSlider');
+        const reviewTotal = reviewSlider.children.length;
+        
+        reviewAutoSlide = setInterval(function() {
+            reviewIndex++;
+            if (reviewIndex >= reviewTotal) reviewIndex = 0;
+            reviewSlider.style.transform = 'translateX(-' + (reviewIndex * 100) + '%)';
+        }, 4000);
+    }
+
+    // 실내공간 슬라이더 설정
+    let interiorIndex = 0;
+    let interiorAutoSlide;
+
+    function moveInteriorSlide(direction) {
+        const interiorSlider = document.getElementById('interiorSlider');
+        const interiorTotal = interiorSlider.children.length;
+        
+        interiorIndex += direction;
+        if (interiorIndex < 0) interiorIndex = interiorTotal - 1;
+        if (interiorIndex >= interiorTotal) interiorIndex = 0;
+        
+        interiorSlider.style.transform = 'translateX(-' + (interiorIndex * 100) + '%)';
+        
+        clearInterval(interiorAutoSlide);
+        startInteriorAutoSlide();
+    }
+
+    function startInteriorAutoSlide() {
+        const interiorSlider = document.getElementById('interiorSlider');
+        const interiorTotal = interiorSlider.children.length;
+        
+        interiorAutoSlide = setInterval(function() {
+            interiorIndex++;
+            if (interiorIndex >= interiorTotal) interiorIndex = 0;
+            interiorSlider.style.transform = 'translateX(-' + (interiorIndex * 100) + '%)';
+        }, 5000);
+    }
+
+    // 페이지 로드 시 자동 슬라이드 시작
+    window.addEventListener('load', function() {
+        startReviewAutoSlide();
+        startInteriorAutoSlide();
+    });
+
+    // 모달 함수
+    function openModal() { 
+        document.getElementById("contactModal").style.display = "block"; 
+    }
+    
+    function closeModal() { 
+        document.getElementById("contactModal").style.display = "none"; 
+    }
+    
+    window.onclick = function(event) { 
+        if (event.target == document.getElementById("contactModal")) {
+            closeModal(); 
+        }
+    }
+</script>
+
+</body>
+</html>
